@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Cafe Order App</title>
+<link rel="stylesheet" href="styles.css"/>
+<script defer src="libs/qrcode.min.js"></script>
+</head><body>
+<div class="container">
+  <div class="card">
+    <h1>☕ Cafe Order App</h1>
+    <p>Chọn số bàn để tạo QR cho khách quét đặt món.</p>
+    <div class="row">
+      <input class="input" id="table" type="number" min="1" placeholder="Nhập số bàn"/>
+      <button class="button" onclick="makeQR()">Tạo QR</button>
+      <a class="button" href="admin.html">Trang Admin</a>
+      <a class="button" href="seller.html">Trang Seller</a>
+    </div>
+    <div id="qr" style="margin-top:12px"></div>
+    <hr/>
+    <small>QR sẽ trỏ tới <code>client.html?table=...</code></small>
+  </div>
+</div>
+<script>
+function makeQR(){
+  const t = document.getElementById('table').value.trim();
+  if(!t) return alert('Nhập số bàn');
+  const url = location.origin + location.pathname.replace('index.html','') + 'client.html?table=' + encodeURIComponent(t);
+  const qrDiv = document.getElementById('qr'); qrDiv.innerHTML='';
+  new QRCode(qrDiv, {text:url, width:256, height:256});
+}
+</script>
+</body></html>
